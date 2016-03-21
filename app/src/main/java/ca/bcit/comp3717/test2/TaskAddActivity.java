@@ -1,5 +1,6 @@
 package ca.bcit.comp3717.test2;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.sip.SipSession;
 import android.os.Bundle;
@@ -53,6 +54,8 @@ public class TaskAddActivity extends AppCompatActivity {
 
     public void onCancel(final View view) {
 
+        Intent returnIntent = new Intent();
+        setResult(Activity.RESULT_CANCELED, returnIntent);
         finish();
     }
 

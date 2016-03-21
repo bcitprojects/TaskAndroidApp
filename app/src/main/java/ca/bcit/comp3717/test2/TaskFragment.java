@@ -1,5 +1,6 @@
 package ca.bcit.comp3717.test2;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
@@ -97,6 +98,11 @@ public class TaskFragment extends ListFragment implements View.OnClickListener {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == Activity.RESULT_CANCELED) {
+            return;
+        }
+
         String   title        = data.getStringExtra("title");
         String   description  = data.getStringExtra("description");
         String   priority     = data.getStringExtra("priority");

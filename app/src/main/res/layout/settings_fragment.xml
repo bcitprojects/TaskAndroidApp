@@ -16,4 +16,37 @@
         android:layout_marginTop="61dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Notification Frequency"
+        android:id="@+id/notiFreqText"
+        android:layout_marginTop="41dp"
+        android:textSize="25dp"
+        android:layout_below="@+id/switch1"
+        android:layout_alignLeft="@+id/switch1"
+        android:layout_alignStart="@+id/switch1" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/notiFreqSpinner"
+        android:layout_alignTop="@+id/notiFreqText"
+        android:layout_alignBottom="@+id/notiFreqText"
+        android:layout_toEndOf="@+id/notiFreqText"
+        android:layout_toRightOf="@+id/notiFreqText"
+        android:spinnerMode="dropdown" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delete All Tasks"
+        android:id="@+id/deleteAllButton"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/notiFreqText"
+        android:layout_alignStart="@+id/notiFreqText"
+        android:layout_marginBottom="52dp" />
+
 </RelativeLayout>
