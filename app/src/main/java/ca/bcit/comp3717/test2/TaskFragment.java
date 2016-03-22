@@ -72,7 +72,7 @@ public class TaskFragment extends ListFragment implements View.OnClickListener {
 
 
                 Intent intent = new Intent(getActivity(), TaskAddActivity.class);
-                startActivityForResult(intent, 1);
+                startActivityForResult(intent, TASK_ADD_REQUEST);
                 break;
         }
     }
