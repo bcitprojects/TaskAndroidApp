@@ -22,6 +22,7 @@ import java.util.Locale;
 public class CalendarFragment extends Fragment {
 
     EditText txtDate;
+    EditText txtDiff;
     Integer mYear, mMonth, mDay;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -31,7 +32,7 @@ public class CalendarFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.calendar_fragment, container, false);
 
         txtDate = (EditText) rootView.findViewById(R.id.txtdate);
-
+        txtDiff = (EditText) rootView.findViewById(R.id.dateDiff);
         return rootView;
     }
 
@@ -69,8 +70,26 @@ public class CalendarFragment extends Fragment {
         public void onDateSet(DatePicker view, int year, int monthOfYear,
                               int dayOfMonth) {
 
-            txtDate.setText(String.valueOf(dayOfMonth) + "-" + String.valueOf(monthOfYear+1)
+            txtDate.setText(String.valueOf(dayOfMonth) + "-" + String.valueOf(monthOfYear + 1)
                     + "-" + String.valueOf(year));
+
+            // put date selection into Calendar object
+            Calendar dateSet = Calendar.getInstance();
+            dateSet.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            dateSet.set(Calendar.MONTH, monthOfYear);
+            dateSet.set(Calendar.YEAR, year);
+
+            // get today into Calendar object
+            Calendar today = Calendar.getInstance();
+
+            // get the time difference (millis)
+            long difference = dateSet.getTimeInMillis() - today.getTimeInMillis();
+
+            // get the days from the millis
+            long days = difference / (24 * 60 * 60 * 1000);
+
+            // set the text to display the days
+            txtDiff.setText(Long.toString(days) + " days left");
         }
     };
 
