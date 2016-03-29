@@ -5,11 +5,16 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-
-    <DatePicker
+    <EditText
+        android:id="@+id/txtdate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/datePicker"
+        android:textSize="20sp"
+        android:focusable="false"
+        android:hint="Touch here to select a date"
+        android:layout_marginTop="43dp"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true" />
+
+
 </RelativeLayout>
