@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -36,7 +37,7 @@ public class TaskAddActivity extends AppCompatActivity {
         String          description = descEdit.getText().toString();
         Spinner         priority    = (Spinner)findViewById(R.id.taskDifficultySpinner);
         DataDbHelper    db          = new DataDbHelper(this);
-        int             id          = 1;
+        String          due         = "12-4-2016";
         //Toast.makeText(getApplicationContext(), Integer.toString(priority.getSelectedItemPosition()), Toast.LENGTH_SHORT).show();
 
         Intent intent = new Intent();
@@ -44,8 +45,8 @@ public class TaskAddActivity extends AppCompatActivity {
         intent.putExtra("description", description);
         intent.putExtra("priority", Integer.toString(priority.getSelectedItemPosition()));
         //save to db
-        db.insert(id, title, description, Integer.toString(priority.getSelectedItemPosition()));
-        id++;
+        db.insert(title, description, Integer.toString(priority.getSelectedItemPosition()), due);
+
         setResult(RESULT_OK, intent);
         finish();
     }

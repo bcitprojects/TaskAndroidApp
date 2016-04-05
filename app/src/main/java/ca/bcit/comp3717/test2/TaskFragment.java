@@ -6,6 +6,7 @@ import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,8 +45,14 @@ public class TaskFragment extends ListFragment implements View.OnClickListener {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         Resources resources = getResources();
+        DataDbHelper    db  = new DataDbHelper(this.getActivity());
+        taskList = new ArrayList<TaskListViewItem>();
+        for(Task t: db.getTasks()){
+            String s = t.getTitle() + " " + t.getDescription() + " " + t.getPriority();
+            taskList.add(new TaskListViewItem(resources.getDrawable(R.drawable.test), t.getTitle(), t.getDescription()));
+        }
 
-        taskList = getTaskList();
+        //taskList = getTaskList();
 
         adapter = new TaskListViewAdapter(getActivity(), taskList);
         /** Setting the array adapter to the list view */
@@ -95,6 +102,13 @@ public class TaskFragment extends ListFragment implements View.OnClickListener {
         if (resultCode == Activity.RESULT_CANCELED) {
             return;
         }
+        DataDbHelper    db          = new DataDbHelper(this.getActivity());
+
+        for(Task t: db.getTasks()){
+            String s = t.getTitle() + " " + t.getDescription() + " " + t.getPriority();
+            Log.d("Test~~~~~~~~~~~~~~~~~~", s);
+        }
+
 
         String   title        = data.getStringExtra("title");
         String   description  = data.getStringExtra("description");
