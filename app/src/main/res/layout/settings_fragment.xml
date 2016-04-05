@@ -49,4 +49,13 @@
         android:layout_alignStart="@+id/notiFreqText"
         android:layout_marginBottom="52dp" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Notify Me"
+        android:id="@+id/notifyButton"
+        android:layout_alignTop="@+id/deleteAllButton"
+        android:layout_alignRight="@+id/switch1"
+        android:layout_alignEnd="@+id/switch1" />
+
 </RelativeLayout>
