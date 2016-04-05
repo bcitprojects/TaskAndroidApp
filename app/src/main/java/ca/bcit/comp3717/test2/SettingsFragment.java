@@ -55,7 +55,7 @@ public class SettingsFragment extends Fragment {
 
     public void sendNotification() {
 
-        Intent resultIntent = new Intent(root.getContext(), TaskFragment.class);
+        Intent resultIntent = new Intent(root.getContext(), MainActivity.class);
 
         PendingIntent resultPendingIntent =
                 PendingIntent.getActivity(
@@ -69,7 +69,7 @@ public class SettingsFragment extends Fragment {
 
         mBuilder.setSmallIcon(R.drawable.test);
         mBuilder.setContentTitle("Notification Alert!");
-        mBuilder.setContentText("Automatically generated notification.");
+        mBuilder.setContentText("Manually generated notification.");
         mBuilder.setTicker("Notification Received!");
         mBuilder.setAutoCancel(true);
         mBuilder.setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_LIGHTS | Notification.DEFAULT_VIBRATE);
