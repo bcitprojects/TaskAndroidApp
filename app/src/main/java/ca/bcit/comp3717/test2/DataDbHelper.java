@@ -47,6 +47,7 @@ public class DataDbHelper extends SQLiteOpenHelper {
         values.put(DataEntry.TITLE_NAME, title);
         values.put(DataEntry.DUE_NAME, due);
         //insert the new row, returning the primary key value of the new row
+        //insert into db
         db.insert(
                 DataEntry.TABLE_NAME,
                 null,
@@ -57,21 +58,9 @@ public class DataDbHelper extends SQLiteOpenHelper {
         SQLiteDatabase    db     = this.getReadableDatabase();
         Cursor            c = db.rawQuery("SELECT * FROM tasks", null);
         ArrayList<Task> array  = new ArrayList<Task>(c.getCount());
-        int            i         = 0;
-        //iterate through rows stored in cursor
-       /* if(cursor.moveToFirst()){
-            while(!cursor.isAfterLast()){
-                Task task = new Task();
-                task.setTitle(cursor.getString(cursor
-                        .getColumnIndex(DataEntry.TITLE_NAME)));
-                task.setTitle(cursor.getString(cursor
-                        .getColumnIndex(DataEntry.DESCRIPTION_NAME)));
-                task.setTitle(cursor.getString(cursor
-                        .getColumnIndex(DataEntry.PRIORITY_NAME)));
-                array.add(task);
-                cursor.moveToNext();
-            }
-        }*/
+        Cursor            cursor = db.rawQuery("SELECT * FROM tasks", null);
+
+        int i = 0;
         if(c.moveToFirst())
         {
             do {
@@ -84,7 +73,7 @@ public class DataDbHelper extends SQLiteOpenHelper {
                 i+=1;
             }while(c.moveToNext());
         }
-        return array; // change this later
+        return array;
     }
 
     @Override
