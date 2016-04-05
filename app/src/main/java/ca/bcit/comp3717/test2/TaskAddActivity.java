@@ -38,7 +38,6 @@ public class TaskAddActivity extends AppCompatActivity {
         DataDbHelper    db          = new DataDbHelper(this);
         int             id          = 1;
         //Toast.makeText(getApplicationContext(), Integer.toString(priority.getSelectedItemPosition()), Toast.LENGTH_SHORT).show();
-
         Intent intent = new Intent();
         intent.putExtra("title", title);
         intent.putExtra("description", description);
@@ -51,7 +50,6 @@ public class TaskAddActivity extends AppCompatActivity {
     }
 
     public void onCancel(final View view) {
-
         Intent returnIntent = new Intent();
         setResult(Activity.RESULT_CANCELED, returnIntent);
         finish();
