@@ -2,17 +2,12 @@ package ca.bcit.comp3717.test2;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.net.sip.SipSession;
 import android.os.Bundle;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 public class TaskAddActivity extends AppCompatActivity {
 
@@ -40,16 +35,19 @@ public class TaskAddActivity extends AppCompatActivity {
         String          title       = titleEdit.getText().toString();
         String          description = descEdit.getText().toString();
         Spinner         priority    = (Spinner)findViewById(R.id.taskDifficultySpinner);
-
+        DataDbHelper    db          = new DataDbHelper(this);
+        int             id          = 1;
         //Toast.makeText(getApplicationContext(), Integer.toString(priority.getSelectedItemPosition()), Toast.LENGTH_SHORT).show();
 
         Intent intent = new Intent();
         intent.putExtra("title", title);
         intent.putExtra("description", description);
         intent.putExtra("priority", Integer.toString(priority.getSelectedItemPosition()));
+        //save to db
+        db.insert(id, title, description, Integer.toString(priority.getSelectedItemPosition()));
+        id++;
         setResult(RESULT_OK, intent);
         finish();
-
     }
 
     public void onCancel(final View view) {
