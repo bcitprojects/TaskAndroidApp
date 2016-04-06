@@ -1,5 +1,6 @@
 package ca.bcit.comp3717.test2;
 
+import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -17,6 +18,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
+
+import java.util.Calendar;
 
 /**
  * Created by Kevin on 2/6/2016.
@@ -45,7 +49,7 @@ public class SettingsFragment extends Fragment {
         notifyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendNotification();
+                delayedNotification();
             }
         });
 
@@ -81,6 +85,21 @@ public class SettingsFragment extends Fragment {
         // notificationID allows you to update the notification later on.
         mNotificationManager.notify(9999, mBuilder.build());
 
+    }
+
+    public void delayedNotification() {
+
+        //Calendar calendar = Calendar.getInstance();
+
+        AlarmManager alarmMgr = (AlarmManager) root.getContext().getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(root.getContext(), AlarmReceiver.class);
+        intent.putExtra("message", "Hello World");
+        intent.putExtra("title", "Alert!");
+
+        PendingIntent alarmIntent = PendingIntent.getBroadcast(root.getContext(), 0, intent, 0);
+        // set for 5 seconds later
+        alarmMgr.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 15000, alarmIntent);
+        Toast.makeText(root.getContext(), "Alarm set in 15 seconds", Toast.LENGTH_LONG).show();
     }
 
 }
