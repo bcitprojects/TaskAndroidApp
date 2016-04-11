@@ -45,7 +45,7 @@ public class TaskFragment extends ListFragment implements View.OnClickListener {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         Resources resources = getResources();
-        DataDbHelper    db  = new DataDbHelper(this.getActivity());
+        DataDbHelper db  = new DataDbHelper(this.getActivity());
         taskList = new ArrayList<TaskListViewItem>();
         for(Task t: db.getTasks()){
             String s = t.getTitle() + " " + t.getDescription() + " " + t.getPriority();
@@ -133,5 +133,6 @@ public class TaskFragment extends ListFragment implements View.OnClickListener {
         addListItem(drawable, title, description);
         adapter.notifyDataSetChanged();
     }
+
 
 }

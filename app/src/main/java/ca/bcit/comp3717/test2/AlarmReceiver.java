@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.NotificationCompat;
 
+import java.util.Random;
+
 /**
  * Created by Pika on 2016-04-06.
  */
@@ -15,9 +17,11 @@ public class AlarmReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        System.out.println("Alarm Get !");
+        //Genrate random notification ID (won't keep track of notifications)
+
         String message = intent.getStringExtra("message");
         String title = intent.getStringExtra("title");
+        int id = intent.getIntExtra("id", -1);
 
         Intent resultIntent = new Intent(context, MainActivity.class);
 
@@ -34,15 +38,13 @@ public class AlarmReceiver extends BroadcastReceiver {
         mBuilder.setSmallIcon(R.drawable.test);
         mBuilder.setContentTitle(title);
         mBuilder.setContentText(message);
-        mBuilder.setTicker("Notification Received!");
         mBuilder.setAutoCancel(true);
+        mBuilder.setTicker("You have task to complete!");
         mBuilder.setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_LIGHTS | Notification.DEFAULT_VIBRATE);
         mBuilder.setContentIntent(resultPendingIntent);
 
         NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-
-        mBuilder.getNotification().flags |= Notification.FLAG_AUTO_CANCEL;
-        // notificationID allows you to update the notification later on.
-        mNotificationManager.notify(9999, mBuilder.build());
+        
+        mNotificationManager.notify(id, mBuilder.build());
     }
 }

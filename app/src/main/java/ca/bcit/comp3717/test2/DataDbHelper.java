@@ -76,6 +76,12 @@ public class DataDbHelper extends SQLiteOpenHelper {
         return array;
     }
 
+    public void deleteAllTasks() {
+        SQLiteDatabase    db     = this.getReadableDatabase();
+        db.execSQL(SQL_DELETE_ENTRIES);
+        onCreate(db);
+    }
+
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL(SQL_DELETE_ENTRIES);

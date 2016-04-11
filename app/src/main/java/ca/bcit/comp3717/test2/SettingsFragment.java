@@ -49,7 +49,16 @@ public class SettingsFragment extends Fragment {
         notifyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                delayedNotification();
+                //NotificationGenerator.generateTimedNotification(rootView.getContext(), "Alert!", "You have task due!" , 5);
+                NotificationGenerator.generateWithList(rootView.getContext(), ((MainActivity) getActivity()).getTaskList(), 5);
+            }
+        });
+
+        Button deleteAllButton = (Button) rootView.findViewById(R.id.deleteAllButton);
+        deleteAllButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity)getActivity()).deleteAllTasks();
             }
         });
 

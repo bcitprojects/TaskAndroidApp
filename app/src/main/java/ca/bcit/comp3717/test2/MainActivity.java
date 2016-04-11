@@ -11,6 +11,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
     //hello
     TabLayout tabLayout;
@@ -60,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
             switch (position){
                 case 0:
                     return new TaskFragment();
-
                 case 1:
                     return new CalendarFragment();
                 case 2:
@@ -108,6 +109,17 @@ public class MainActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    public ArrayList<Task> getTaskList() {
+        DataDbHelper db = new DataDbHelper(this);
+        return db.getTasks();
+    }
+
+    public void deleteAllTasks() {
+        DataDbHelper db = new DataDbHelper(this);
+        db.deleteAllTasks();
+    }
+
 
     /*@Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
