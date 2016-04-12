@@ -29,6 +29,7 @@
             </intent-filter>
         </activity>
         <receiver android:process=":remote" android:name="AlarmReceiver"></receiver>
+        <service android:name=".BackgroundService" />
     </application>
 
 </manifest>

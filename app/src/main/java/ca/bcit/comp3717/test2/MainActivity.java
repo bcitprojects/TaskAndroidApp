@@ -1,6 +1,9 @@
 package ca.bcit.comp3717.test2;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -8,16 +11,21 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
-    //hello
+
     TabLayout tabLayout;
     ViewPager viewPager;
     CustomAdapter custAdapter;
+    public static final int NOTIFICATION_HOUR = 19;
+    public static final int NOTIFICATION_MINUTE = 22;
+    public static final int NOTIFICATION_SECOND = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        setDailyReminder(NOTIFICATION_HOUR, NOTIFICATION_MINUTE, NOTIFICATION_SECOND);
     }
 
     private class CustomAdapter extends FragmentStatePagerAdapter {
@@ -118,6 +127,29 @@ public class MainActivity extends AppCompatActivity {
     public void deleteAllTasks() {
         DataDbHelper db = new DataDbHelper(this);
         db.deleteAllTasks();
+    }
+
+    public void setDailyReminder(int hour, int minute, int second) {
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.MINUTE, minute);
+        calendar.set(Calendar.SECOND, second);
+
+        Intent DailyReminderIntent = new Intent (MainActivity.this, AlarmReceiver.class);
+        DailyReminderIntent.putExtra("IntentType", "DailyReminder");
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0,DailyReminderIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager am = (AlarmManager) MainActivity.this.getSystemService(MainActivity.this.ALARM_SERVICE);
+
+        try {
+            am.cancel(pendingIntent);
+        } catch (Exception e) {
+            Log.e("Err", "AlarmManager update was not canceled. " + e.toString());
+        }
+
+        am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
+
     }
 
 

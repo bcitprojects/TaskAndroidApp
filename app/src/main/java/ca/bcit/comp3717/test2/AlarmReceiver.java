@@ -21,6 +21,9 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         if(intentType.equals("Notification")) {
             sendNotification(context,intent);
+        }else if(intentType.equals("DailyReminder")) {
+            Intent background = new Intent(context, BackgroundService.class);
+            context.startService(background);
         }
 
     }
