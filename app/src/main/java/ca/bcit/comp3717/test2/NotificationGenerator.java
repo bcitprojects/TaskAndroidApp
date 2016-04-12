@@ -42,6 +42,7 @@ public class NotificationGenerator {
                 intent.putExtra("title", a.getTitle());
                 intent.putExtra("priority", a.getPriority());
                 intent.putExtra("id", notificationID);
+                intent.putExtra("IntentType", "Notification");
 
                 Log.d("err", a.getTitle() + " " + a.getDescription() + " " + a.getPriority());
 

@@ -17,7 +17,15 @@ public class AlarmReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
 
-        //Genrate random notification ID (won't keep track of notifications)
+        String intentType = intent.getStringExtra("IntentType");
+
+        if(intentType.equals("Notification")) {
+            sendNotification(context,intent);
+        }
+
+    }
+
+    private void sendNotification(Context context, Intent intent) {
 
         String message = intent.getStringExtra("message");
         String title = intent.getStringExtra("title");
