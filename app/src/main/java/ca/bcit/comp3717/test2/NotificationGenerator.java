@@ -8,7 +8,6 @@ import android.util.Log;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * Created by Pika on 2016-04-11.
@@ -41,7 +40,9 @@ public class NotificationGenerator {
                 Intent intent = new Intent(context, AlarmReceiver.class);
                 intent.putExtra("message", a.getDescription());
                 intent.putExtra("title", a.getTitle());
+                intent.putExtra("priority", a.getPriority());
                 intent.putExtra("id", notificationID);
+
                 Log.d("err", a.getTitle() + " " + a.getDescription() + " " + a.getPriority());
 
                 PendingIntent alarmIntent = PendingIntent.getBroadcast(context, notificationID, intent, 0);

@@ -65,37 +65,6 @@ public class SettingsFragment extends Fragment {
         return rootView;
     }
 
-
-    public void sendNotification() {
-
-        Intent resultIntent = new Intent(root.getContext(), MainActivity.class);
-
-        PendingIntent resultPendingIntent =
-                PendingIntent.getActivity(
-                        root.getContext(),
-                        0,
-                        resultIntent,
-                        PendingIntent.FLAG_UPDATE_CURRENT
-                );
-
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(root.getContext());
-
-        mBuilder.setSmallIcon(R.drawable.test);
-        mBuilder.setContentTitle("Notification Alert!");
-        mBuilder.setContentText("Manually generated notification.");
-        mBuilder.setTicker("Notification Received!");
-        mBuilder.setAutoCancel(true);
-        mBuilder.setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_LIGHTS | Notification.DEFAULT_VIBRATE);
-        mBuilder.setContentIntent(resultPendingIntent);
-
-        NotificationManager mNotificationManager = (NotificationManager) root.getContext().getSystemService(Context.NOTIFICATION_SERVICE);
-
-        mBuilder.getNotification().flags |= Notification.FLAG_AUTO_CANCEL;
-        // notificationID allows you to update the notification later on.
-        mNotificationManager.notify(9999, mBuilder.build());
-
-    }
-
     public void delayedNotification() {
 
         //Calendar calendar = Calendar.getInstance();

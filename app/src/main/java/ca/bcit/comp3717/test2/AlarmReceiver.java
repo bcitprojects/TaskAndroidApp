@@ -21,6 +21,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         String message = intent.getStringExtra("message");
         String title = intent.getStringExtra("title");
+        String priority = intent.getStringExtra("priority");
         int id = intent.getIntExtra("id", -1);
 
         Intent resultIntent = new Intent(context, MainActivity.class);
@@ -35,7 +36,20 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context);
 
-        mBuilder.setSmallIcon(R.drawable.test);
+        switch(priority){
+            case "0":
+                mBuilder.setSmallIcon(R.drawable.test);
+                break;
+            case "1":
+                mBuilder.setSmallIcon(R.drawable.med);
+                break;
+            case "2":
+                mBuilder.setSmallIcon(R.drawable.high);
+                break;
+            default:
+                mBuilder.setSmallIcon(R.drawable.test);
+        }
+
         mBuilder.setContentTitle(title);
         mBuilder.setContentText(message);
         mBuilder.setAutoCancel(true);
@@ -44,7 +58,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         mBuilder.setContentIntent(resultPendingIntent);
 
         NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        
+
         mNotificationManager.notify(id, mBuilder.build());
     }
 }
