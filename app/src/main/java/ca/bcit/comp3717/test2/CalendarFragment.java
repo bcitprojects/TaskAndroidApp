@@ -1,6 +1,7 @@
 package ca.bcit.comp3717.test2;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -8,8 +9,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
@@ -21,9 +25,16 @@ import java.util.Locale;
  */
 public class CalendarFragment extends Fragment {
 
+    private String array_spinner[];
     EditText txtDate;
-    EditText txtDiff;
+    EditText titleEdit;
+    EditText descEdit;
+    String   dateDiff;
+    Spinner spinner;
+    String  priority;
+
     Integer mYear, mMonth, mDay;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -31,8 +42,24 @@ public class CalendarFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.calendar_fragment, container, false);
 
-        txtDate = (EditText) rootView.findViewById(R.id.txtdate);
-        txtDiff = (EditText) rootView.findViewById(R.id.dateDiff);
+        txtDate     = (EditText) rootView.findViewById(R.id.txtdate);
+
+        Button confirm = (Button) rootView.findViewById(R.id.confirm);
+        confirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onConfirm(v);
+            }
+        });
+
+        array_spinner=new String[3];
+        array_spinner[0]="Low";
+        array_spinner[1]="Medium";
+        array_spinner[2]="High";
+        Spinner s = (Spinner) rootView.findViewById(R.id.taskDifficultySpinner);
+        ArrayAdapter adapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, array_spinner);
+        s.setAdapter(adapter);
+
         return rootView;
     }
 
@@ -70,8 +97,8 @@ public class CalendarFragment extends Fragment {
         public void onDateSet(DatePicker view, int year, int monthOfYear,
                               int dayOfMonth) {
 
-            txtDate.setText(String.valueOf(dayOfMonth) + "-" + String.valueOf(monthOfYear + 1)
-                    + "-" + String.valueOf(year));
+            txtDate.setText(String.valueOf(dayOfMonth) + "/" + String.valueOf(monthOfYear + 1)
+                    + "/" + String.valueOf(year));
 
             // put date selection into Calendar object
             Calendar dateSet = Calendar.getInstance();
@@ -89,8 +116,34 @@ public class CalendarFragment extends Fragment {
             long days = difference / (24 * 60 * 60 * 1000);
 
             // set the text to display the days
-            txtDiff.setText(Long.toString(days) + " days left");
+            dateDiff = Long.toString(days) + " days left";
         }
     };
+
+    public void onConfirm(final View view) {
+
+        txtDate     = (EditText) getView().findViewById(R.id.txtdate);
+        titleEdit   = (EditText)getView().findViewById(R.id.titleEditText);
+        descEdit    = (EditText)getView().findViewById(R.id.descriptionEditText);
+        spinner     = (Spinner)getView().findViewById(R.id.taskDifficultySpinner);
+        priority    = Integer.toString(spinner.getSelectedItemPosition());
+        DataDbHelper    db          = new DataDbHelper(getContext());
+
+        String s1 = txtDate.getText().toString();
+        String s2 = titleEdit.getText().toString();
+        String s3 = descEdit.getText().toString();
+
+        if(s1.equals("") || s2.equals("") || s3.equals("")){
+            Toast.makeText(getContext(), "Please input all fields", Toast.LENGTH_LONG).show();
+        }else{
+            //save to db
+            db.insert(titleEdit.getText().toString(), descEdit.getText().toString(), priority, txtDate.getText().toString());
+
+            Toast.makeText(getContext(), "Successfully Added!", Toast.LENGTH_LONG).show();
+            txtDate.setText("");
+            titleEdit.setText("");
+            descEdit.setText("");
+        }
+    }
 
 }

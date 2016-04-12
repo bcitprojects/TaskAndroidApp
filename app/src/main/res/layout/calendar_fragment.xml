@@ -12,22 +12,94 @@
         android:textSize="20sp"
         android:focusable="false"
         android:hint="Touch here to select a date"
-        android:layout_marginTop="43dp"
+        android:layout_marginTop="29dp"
+        android:layout_below="@+id/titleEditText"
+        android:layout_alignLeft="@+id/title"
+        android:layout_alignStart="@+id/title"
+        android:layout_alignRight="@+id/titleEditText"
+        android:layout_alignEnd="@+id/titleEditText" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Title:"
+        android:id="@+id/title"
+        android:layout_marginTop="42dp"
+        android:textSize="30dp"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="43dp"
+        android:layout_marginStart="43dp" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/dateDiff"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/titleEditText"
+        android:layout_alignTop="@+id/title"
+        android:layout_toRightOf="@+id/title"
+        android:layout_toEndOf="@+id/title" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Description"
+        android:id="@+id/textView"
+        android:layout_marginTop="42dp"
+        android:textSize="25dp"
         android:layout_below="@+id/txtdate"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="48dp"
-        android:text="DateDifference"
-        android:clickable="false"
-        android:cursorVisible="false"
-        android:focusable="false"
-        android:focusableInTouchMode="false"/>
+        android:layout_alignLeft="@+id/txtdate"
+        android:layout_alignStart="@+id/txtdate" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:ems="10"
+        android:background="#eaeaea"
+        android:editable="true"
+        android:gravity="top"
+        android:id="@+id/descriptionEditText"
+        android:layout_alignLeft="@+id/textView"
+        android:layout_alignStart="@+id/textView"
+        android:layout_below="@+id/textView"
+        android:layout_alignRight="@+id/titleEditText"
+        android:layout_alignEnd="@+id/titleEditText"
+        android:layout_above="@+id/taskDifficultySpinner" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Priority"
+        android:id="@+id/textView2"
+        android:textSize="25dp"
+        android:layout_below="@+id/textView"
+        android:layout_alignLeft="@+id/descriptionEditText"
+        android:layout_alignStart="@+id/descriptionEditText"
+        android:layout_marginTop="74dp" />
+
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/taskDifficultySpinner"
+        android:spinnerMode="dropdown"
+        android:layout_alignTop="@+id/textView2"
+        android:layout_toRightOf="@+id/textView"
+        android:layout_toEndOf="@+id/textView"
+        android:layout_marginLeft="30dp"
+        android:layout_marginStart="30dp" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Confirm"
+        android:id="@+id/confirm"
+        android:layout_below="@+id/taskDifficultySpinner"
+        android:layout_alignRight="@+id/descriptionEditText"
+        android:layout_alignEnd="@+id/descriptionEditText"
+        android:layout_marginTop="45dp" />
 
 
 </RelativeLayout>
