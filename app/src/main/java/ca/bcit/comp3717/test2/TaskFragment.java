@@ -48,8 +48,21 @@ public class TaskFragment extends ListFragment implements View.OnClickListener {
         DataDbHelper db  = new DataDbHelper(this.getActivity());
         taskList = new ArrayList<TaskListViewItem>();
         for(Task t: db.getTasks()){
-            String s = t.getTitle() + " " + t.getDescription() + " " + t.getPriority();
-            taskList.add(new TaskListViewItem(resources.getDrawable(R.drawable.test), t.getTitle(), t.getDescription()));
+            Drawable drawable;
+            switch(t.getPriority()){
+                case "0":
+                    drawable = getResources().getDrawable(R.drawable.test);
+                    break;
+                case "1":
+                    drawable = getResources().getDrawable(R.drawable.med);
+                    break;
+                case "2":
+                    drawable = getResources().getDrawable(R.drawable.high);
+                    break;
+                default:
+                    drawable = getResources().getDrawable(R.drawable.test);
+            }
+            taskList.add(new TaskListViewItem(drawable, t.getTitle(), t.getDescription()));
         }
 
         //taskList = getTaskList();
