@@ -49,7 +49,6 @@ public class SettingsFragment extends Fragment {
         notifyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //NotificationGenerator.generateTimedNotification(rootView.getContext(), "Alert!", "You have task due!" , 5);
                 NotificationGenerator.generateWithList(rootView.getContext(), ((MainActivity) getActivity()).getTaskList(), 5);
             }
         });

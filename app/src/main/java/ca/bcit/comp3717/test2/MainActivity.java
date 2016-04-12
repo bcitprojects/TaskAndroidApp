@@ -23,8 +23,8 @@ public class MainActivity extends AppCompatActivity {
     TabLayout tabLayout;
     ViewPager viewPager;
     CustomAdapter custAdapter;
-    public static final int NOTIFICATION_HOUR = 19;
-    public static final int NOTIFICATION_MINUTE = 22;
+    public static final int NOTIFICATION_HOUR = 8;
+    public static final int NOTIFICATION_MINUTE = 0;
     public static final int NOTIFICATION_SECOND = 0;
 
     @Override
@@ -149,7 +149,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
-
     }
 
 
