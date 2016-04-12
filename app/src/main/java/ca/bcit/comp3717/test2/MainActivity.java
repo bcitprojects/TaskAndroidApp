@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setTitle("TaskBounty");
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         custAdapter = new CustomAdapter(getSupportFragmentManager(), getApplicationContext());
         viewPager.setAdapter(custAdapter);
@@ -72,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                 case 0:
                     return new TaskFragment();
                 case 1:
-                    return new CalendarFragment();
+                    return new CreateFragment();
                 case 2:
                     return new SettingsFragment();
                 default:
@@ -93,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public int getItemPosition(Object object) {
             // TODO Auto-generated method stub
+            Log.d("GETITEMPOS", "HELLO");
             return POSITION_NONE;
         }
     }
@@ -151,6 +153,9 @@ public class MainActivity extends AppCompatActivity {
         am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
     }
 
+    public ViewPager getViewPager(){
+        return viewPager;
+    }
 
     /*@Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

@@ -25,7 +25,7 @@ public class NotificationGenerator {
     public static final int ZERO_DAY = 0;
 
     public static final int DAYS_IN_MILLISECONDS = 24*60*60*1000;
-    public static final String TASK_DATE_FORMAT = "dd-MM-yyyy";
+    public static final String TASK_DATE_FORMAT = "dd/MM/yyyy";
     public static final String TODAY_DATE_FORMAT = "dd/MM-yyyy";
 
     public static void generateTimedNotification(Context context, String title, String message, int seconds) {

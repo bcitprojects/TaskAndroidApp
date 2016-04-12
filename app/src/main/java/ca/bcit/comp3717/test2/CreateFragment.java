@@ -1,6 +1,7 @@
 package ca.bcit.comp3717.test2;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -23,7 +25,7 @@ import java.util.Locale;
 /**
  * Created by Kevin on 2/6/2016.
  */
-public class CalendarFragment extends Fragment {
+public class CreateFragment extends Fragment {
 
     private String array_spinner[];
     EditText txtDate;
@@ -133,7 +135,7 @@ public class CalendarFragment extends Fragment {
         String s2 = titleEdit.getText().toString();
         String s3 = descEdit.getText().toString();
 
-        if(s1.equals("") || s2.equals("") || s3.equals("")){
+        if (s1.equals("") || s2.equals("") || s3.equals("")){
             Toast.makeText(getContext(), "Please input all fields", Toast.LENGTH_LONG).show();
         }else{
             //save to db
@@ -143,6 +145,7 @@ public class CalendarFragment extends Fragment {
             txtDate.setText("");
             titleEdit.setText("");
             descEdit.setText("");
+            ((MainActivity)getActivity()).getViewPager().getAdapter().notifyDataSetChanged();
         }
     }
 

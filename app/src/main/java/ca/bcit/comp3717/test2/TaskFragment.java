@@ -17,7 +17,7 @@ import java.util.ArrayList;
 /**
  * Created by Kevin on 2/6/2016.
  */
-public class TaskFragment extends ListFragment implements View.OnClickListener {
+public class TaskFragment extends ListFragment {
 
     private ArrayList<TaskListViewItem> taskList;
     private TaskListViewAdapter adapter;
@@ -35,15 +35,7 @@ public class TaskFragment extends ListFragment implements View.OnClickListener {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.task_fragment, container, false);
 
-        button = (Button) rootView.findViewById(R.id.button);
-        button.setOnClickListener(this);
 
-        return rootView;
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
         Resources resources = getResources();
         DataDbHelper db  = new DataDbHelper(this.getActivity());
         taskList = new ArrayList<TaskListViewItem>();
@@ -71,25 +63,13 @@ public class TaskFragment extends ListFragment implements View.OnClickListener {
         /** Setting the array adapter to the list view */
         setListAdapter(adapter);
 
+        return rootView;
     }
 
     @Override
-    public void onClick(View v) {
-
-        switch (v.getId()) {
-            case R.id.button:
-                //                int count = taskList.size() + 1;
-//                Resources resources = getResources();
-//                taskList.add(new TaskListViewItem(resources.getDrawable(R.drawable.test), "test Title " + count, "test description"));
-//                adapter.notifyDataSetChanged();
-
-
-                Intent intent = new Intent(getActivity(), TaskAddActivity.class);
-                startActivityForResult(intent, TASK_ADD_REQUEST);
-                break;
-        }
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
     }
-
 
 
    private ArrayList<TaskListViewItem> getTaskList(){
@@ -107,45 +87,4 @@ public class TaskFragment extends ListFragment implements View.OnClickListener {
         Resources resources = getResources();
         taskList.add(new TaskListViewItem(drawable, title, description));
     }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (resultCode == Activity.RESULT_CANCELED) {
-            return;
-        }
-        DataDbHelper    db          = new DataDbHelper(this.getActivity());
-
-        for(Task t: db.getTasks()){
-            String s = t.getTitle() + " " + t.getDescription() + " " + t.getPriority();
-            Log.d("Test~~~~~~~~~~~~~~~~~~", s);
-        }
-
-
-        String   title        = data.getStringExtra("title");
-        String   description  = data.getStringExtra("description");
-        String   priority     = data.getStringExtra("priority");
-        Drawable drawable     = getResources().getDrawable(R.drawable.test);
-
-        switch(priority){
-            case "0":
-                drawable = getResources().getDrawable(R.drawable.test);
-                break;
-            case "1":
-                drawable = getResources().getDrawable(R.drawable.med);
-                break;
-            case "2":
-                drawable = getResources().getDrawable(R.drawable.high);
-                break;
-            default:
-                drawable = getResources().getDrawable(R.drawable.test);
-        }
-
-        //Toast.makeText(getContext(), title, Toast.LENGTH_SHORT).show();
-        addListItem(drawable, title, description);
-        adapter.notifyDataSetChanged();
-    }
-
-
 }
