@@ -11,8 +11,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
 
 /**
  * Created by Kevin on 2/6/2016.
@@ -38,8 +45,15 @@ public class TaskFragment extends ListFragment {
 
         Resources resources = getResources();
         DataDbHelper db  = new DataDbHelper(this.getActivity());
+        ArrayList<Task> tasks;
+        tasks = db.getTasks();
+        Log.d("tasks", tasks.toString());
+        Collections.sort(tasks, new Task());
+        Log.d("tasks", tasks.toString());
+
         taskList = new ArrayList<TaskListViewItem>();
-        for(Task t: db.getTasks()){
+        for(Task t: tasks){
+            String dateDiff = "";
             Drawable drawable;
             switch(t.getPriority()){
                 case "0":
@@ -54,7 +68,31 @@ public class TaskFragment extends ListFragment {
                 default:
                     drawable = getResources().getDrawable(R.drawable.test);
             }
-            taskList.add(new TaskListViewItem(drawable, t.getTitle(), t.getDescription()));
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            Calendar dateSet = Calendar.getInstance();
+            try {
+                dateSet.setTime(sdf.parse(t.getDue()));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            // get today into Calendar object
+            Calendar today = Calendar.getInstance();
+            today.set(Calendar.HOUR_OF_DAY, 0);
+
+            // get the time difference (millis)
+            long difference = dateSet.getTimeInMillis() - today.getTimeInMillis();
+
+            // get the days from the millis
+            long days = (difference / (24 * 60 * 60 * 1000)) + 1;
+
+            // set the text to display the days
+            dateDiff = Long.toString(days);
+
+            String dayString = (dateDiff.equalsIgnoreCase("1"))? " day left":" days left";
+            TaskListViewItem tlvi = new TaskListViewItem(drawable, dateDiff + dayString + '\n' + t.getTitle(), t.getDescription());
+            tlvi.setDue(dateSet);
+            taskList.add(tlvi);
         }
 
         //taskList = getTaskList();
@@ -64,6 +102,15 @@ public class TaskFragment extends ListFragment {
         setListAdapter(adapter);
 
         return rootView;
+    }
+
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        TaskListViewItem task = (TaskListViewItem)getListView().getItemAtPosition(position);
+        Calendar cal = task.getDue();
+        SimpleDateFormat format1 = new SimpleDateFormat("EEE, d MMM yyyy");
+        String formatted = format1.format(cal.getTime());
+        Toast.makeText(getContext(), "DUE ON: " + formatted, Toast.LENGTH_SHORT).show();
     }
 
     @Override
