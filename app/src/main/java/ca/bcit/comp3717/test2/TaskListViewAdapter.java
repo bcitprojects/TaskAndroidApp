@@ -5,8 +5,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -15,12 +17,15 @@ import java.util.List;
  */
 public class TaskListViewAdapter extends ArrayAdapter<TaskListViewItem>{
 
+    List<TaskListViewItem> list;
+
     public TaskListViewAdapter(Context context, List<TaskListViewItem> items) {
         super(context, R.layout.task_list_item, items);
+        this.list = items;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
 
         if(convertView == null) {
@@ -39,11 +44,26 @@ public class TaskListViewAdapter extends ArrayAdapter<TaskListViewItem>{
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
+        Button deleteBtn = (Button)convertView.findViewById(R.id.delete_btn);
+
         // update the item view
         TaskListViewItem item = getItem(position);
         viewHolder.ivIcon.setImageDrawable(item.icon);
         viewHolder.tvTitle.setText(item.title);
         viewHolder.tvDescription.setText(item.description);
+
+        deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //do something
+
+                DataDbHelper db = new DataDbHelper(v.getContext());
+                db.delete(list.get(position).id);
+                Toast.makeText(v.getContext(),"Deleting " + position, Toast.LENGTH_LONG).show();
+                list.remove(position); //or some other task
+                notifyDataSetChanged();
+            }
+        });
 
         return convertView;
     }

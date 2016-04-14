@@ -27,6 +27,11 @@ public class DataDbHelper extends SQLiteOpenHelper {
                     " );";
     private static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS " + DataEntry.TABLE_NAME;
+    private static final String SQL_DELETE_ID =
+            "DELETE FROM " + DataEntry.TABLE_NAME +
+            " WHERE " + DataEntry._ID + " = ";
+
+
     public DataDbHelper(final Context context)
     {
         super(context, DB_NAME, null, DB_VERSION);
@@ -53,6 +58,14 @@ public class DataDbHelper extends SQLiteOpenHelper {
                 null,
                 values);
     }
+
+    public void delete(int id) {
+        //get data respository in write mode
+        SQLiteDatabase db = this.getWritableDatabase();
+        //create new map of values, where column names are the keys
+        db.execSQL(SQL_DELETE_ID + id);
+    }
+
     //returns list of tasks in db
     public ArrayList<Task> getTasks(){
         SQLiteDatabase    db     = this.getReadableDatabase();
@@ -65,6 +78,7 @@ public class DataDbHelper extends SQLiteOpenHelper {
         {
             do {
                 Task task = new Task();
+                task.setId(Integer.parseInt(c.getString(c.getColumnIndex(DataEntry._ID))));
                 task.setTitle(c.getString(c.getColumnIndex(DataEntry.TITLE_NAME)));
                 task.setDescription(c.getString(c.getColumnIndex(DataEntry.DESCRIPTION_NAME)));
                 task.setPriority(c.getString(c.getColumnIndex(DataEntry.PRIORITY_NAME)));

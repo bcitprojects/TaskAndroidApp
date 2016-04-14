@@ -13,6 +13,17 @@ public class Task implements Comparator<Task>{
     String description;
     String priority;
     String due;
+    int id;
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+
+        return id;
+    }
+
     public Task() {
     }
 
