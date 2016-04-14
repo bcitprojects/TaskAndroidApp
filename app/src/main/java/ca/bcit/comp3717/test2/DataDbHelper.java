@@ -14,7 +14,7 @@ import ca.bcit.comp3717.test2.DataContract.DataEntry;
  */
 public class DataDbHelper extends SQLiteOpenHelper {
     // If you change the database schema, you must increment the database version.
-    public static final int DB_VERSION = 7;
+    public static final int DB_VERSION = 9;
     public static final String DB_NAME = "Task.db";
     Context context;
     private static final String SQL_CREATE_ENTRIES =
@@ -86,6 +86,17 @@ public class DataDbHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL(SQL_DELETE_ENTRIES);
         onCreate(db);
+    }
+
+    //returns count of tasks for about page, COPY/PASTE THIS
+    public int getCount(){
+        //read mode
+        String countQuery = "SELECT  * FROM " + DataEntry.TABLE_NAME;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(countQuery, null);
+        int cnt = cursor.getCount();
+        cursor.close();
+        return cnt;
     }
 
 }

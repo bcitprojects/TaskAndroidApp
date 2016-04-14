@@ -37,6 +37,7 @@ public class TaskAddActivity extends AppCompatActivity {
         Spinner         priority    = (Spinner)findViewById(R.id.taskDifficultySpinner);
         DataDbHelper    db          = new DataDbHelper(this);
         String          due         = "12-4-2016";
+        int             count;
         //Toast.makeText(getApplicationContext(), Integer.toString(priority.getSelectedItemPosition()), Toast.LENGTH_SHORT).show();
         Intent intent = new Intent();
         intent.putExtra("title", title);
@@ -44,6 +45,12 @@ public class TaskAddActivity extends AppCompatActivity {
         intent.putExtra("priority", Integer.toString(priority.getSelectedItemPosition()));
         //save to db
         db.insert(title, description, Integer.toString(priority.getSelectedItemPosition()), due);
+        //get current number of tasks from db and store in sahredpreferences
+        //SharedPreferences prefs = this.getSharedPreferences(
+        //        "com.example.app", Context.MODE_PRIVATE);
+        //String taskCountKey = "com.example.app.count";
+        //count = db.getCount();
+        //prefs.edit().putInt(taskCountKey, count);
 
         setResult(RESULT_OK, intent);
         finish();

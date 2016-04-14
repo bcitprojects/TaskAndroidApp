@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
 
     private class CustomAdapter extends FragmentStatePagerAdapter {
 
-        private String fragments [] = {"Tasks","Calendar", "Settings"};
+        private String fragments [] = {"Tasks","Create", "About"};
 
         public CustomAdapter(FragmentManager supportFragmentManager, Context applicationContext) {
             super(supportFragmentManager);
@@ -75,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
                 case 1:
                     return new CreateFragment();
                 case 2:
-                    return new SettingsFragment();
+                    return new AboutFragment();
                 default:
                     return null;
             }

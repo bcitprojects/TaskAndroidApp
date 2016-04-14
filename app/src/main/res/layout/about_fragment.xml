@@ -58,4 +58,15 @@
         android:layout_alignRight="@+id/switch1"
         android:layout_alignEnd="@+id/switch1" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Task to be Completed: "
+        android:id="@+id/taskCount"
+        android:textSize="25dp"
+        android:textColor="#050000"
+        android:layout_centerVertical="true"
+        android:layout_alignLeft="@+id/notiFreqText"
+        android:layout_alignStart="@+id/notiFreqText" />
+
 </RelativeLayout>
