@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
 
     private class CustomAdapter extends FragmentStatePagerAdapter {
 
-        private String fragments [] = {"Tasks","Create", "About"};
+        private String fragments[] = {"Tasks", "Create", "About"};
 
         public CustomAdapter(FragmentManager supportFragmentManager, Context applicationContext) {
             super(supportFragmentManager);
@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            switch (position){
+            switch (position) {
                 case 0:
                     return new TaskFragment();
                 case 1:
@@ -94,8 +94,6 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public int getItemPosition(Object object) {
-            // TODO Auto-generated method stub
-            Log.d("GETITEMPOS", "HELLO");
             return POSITION_NONE;
         }
     }
@@ -139,10 +137,10 @@ public class MainActivity extends AppCompatActivity {
         calendar.set(Calendar.MINUTE, minute);
         calendar.set(Calendar.SECOND, second);
 
-        Intent DailyReminderIntent = new Intent (MainActivity.this, AlarmReceiver.class);
+        Intent DailyReminderIntent = new Intent(MainActivity.this, AlarmReceiver.class);
         DailyReminderIntent.putExtra("IntentType", "DailyReminder");
 
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0,DailyReminderIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, DailyReminderIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager am = (AlarmManager) MainActivity.this.getSystemService(MainActivity.this.ALARM_SERVICE);
 
         try {
@@ -154,27 +152,7 @@ public class MainActivity extends AppCompatActivity {
         am.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, pendingIntent);
     }
 
-    public ViewPager getViewPager(){
+    public ViewPager getViewPager() {
         return viewPager;
     }
-
-    /*@Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        /*super.onActivityResult(requestCode,resultCode,data);
-        String title = data.getStringExtra("title");
-        //Toast.makeText(this, title, Toast.LENGTH_SHORT).show();
-        TaskFragment fragobj = new TaskFragment();
-        Bundle bundle = new Bundle();
-        bundle.putString("title", "SUPPP");
-        fragobj.setArguments(bundle);
-        custAdapter.notifyDataSetChanged();
-        if (requestCode == TaskFragment.TASK_ADD_REQUEST) {
-            // Make sure the request was successful
-            if (resultCode == RESULT_OK) {
-
-            }
-        }
-    }*/
-
-
 }

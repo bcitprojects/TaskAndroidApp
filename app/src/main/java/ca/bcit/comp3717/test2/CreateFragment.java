@@ -13,6 +13,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
@@ -21,12 +23,11 @@ import java.util.Calendar;
 public class CreateFragment extends Fragment {
 
     private String array_spinner[];
-    EditText txtDate;
-    EditText titleEdit;
-    EditText descEdit;
-    String   dateDiff;
-    Spinner spinner;
-    String  priority;
+    EditText    txtDate;
+    EditText    titleEdit;
+    EditText    descEdit;
+    Spinner     spinner;
+    String      priority;
 
     Integer mYear, mMonth, mDay;
 
@@ -115,17 +116,35 @@ public class CreateFragment extends Fragment {
         String s2 = titleEdit.getText().toString();
         String s3 = descEdit.getText().toString();
 
-        if (s1.equals("") || s2.equals("") || s3.equals("")){
-            Toast.makeText(getContext(), "Please input all fields", Toast.LENGTH_LONG).show();
-        }else{
-            //save to db
-            db.insert(titleEdit.getText().toString(), descEdit.getText().toString(), priority, txtDate.getText().toString());
 
-            Toast.makeText(getContext(), "Successfully Added!", Toast.LENGTH_LONG).show();
-            txtDate.setText("");
-            titleEdit.setText("");
-            descEdit.setText("");
-            ((MainActivity)getActivity()).getViewPager().getAdapter().notifyDataSetChanged();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Calendar dateDue = Calendar.getInstance();
+        try {
+            dateDue.setTime(sdf.parse(s1));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        // get today into Calendar object
+        Calendar today = Calendar.getInstance();
+
+        int res = dateDue.compareTo(today); // returns < 0 if datedue is before today
+
+        if(res >= 0) {
+            if (s1.equals("") || s2.equals("") || s3.equals("")) {
+                Toast.makeText(getContext(), "Please input all fields", Toast.LENGTH_LONG).show();
+            } else {
+                //save to db
+                db.insert(titleEdit.getText().toString(), descEdit.getText().toString(), priority, txtDate.getText().toString());
+
+                Toast.makeText(getContext(), "Successfully Added!", Toast.LENGTH_LONG).show();
+                txtDate.setText("");
+                titleEdit.setText("");
+                descEdit.setText("");
+                ((MainActivity) getActivity()).getViewPager().getAdapter().notifyDataSetChanged();
+            }
+        }else{
+            Toast.makeText(getContext(), "Please put in a valid date!", Toast.LENGTH_SHORT).show();
         }
     }
 
