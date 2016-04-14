@@ -1,14 +1,17 @@
 package ca.bcit.comp3717.test2;
 
 import android.app.AlarmManager;
+import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -25,7 +28,13 @@ public class AboutFragment extends Fragment {
 
     private String array_spinner[];
     private View root;
+    public static final String MyPREFERENCES = "MyPrefs" ;
+    public static final String NOTIFICATION_STATE = "notificationKey";
+    public static final String NOTIFREQ_VALUE = "notiFreqKey";
+
     public static int notifications;
+    public static int notificationFrequency;
+    SharedPreferences sharedpreferences;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -33,16 +42,46 @@ public class AboutFragment extends Fragment {
 
         final View rootView = inflater.inflate(R.layout.about_fragment, container, false);
         root                = rootView;
+        sharedpreferences = rootView.getContext().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+
         //needed to get number of tasks COPY/PASTE THIS
         DataDbHelper db     = new DataDbHelper(getActivity());
 
         array_spinner = new String[3];
         array_spinner[0] = "1";
-        array_spinner[1] = "1.5";
-        array_spinner[2] = "2";
+        array_spinner[1] = "2";
+        array_spinner[2] = "3";
         Spinner s = (Spinner) rootView.findViewById(R.id.notiFreqSpinner);
         ArrayAdapter adapter = new ArrayAdapter(rootView.getContext(), android.R.layout.simple_spinner_item, array_spinner);
         s.setAdapter(adapter);
+
+        notificationFrequency = (sharedpreferences.getInt(NOTIFREQ_VALUE, 1));
+
+        if(notificationFrequency == 3) {
+            s.setSelection(2);
+        }else if(notificationFrequency == 2) {
+            s.setSelection(1);
+        }else{
+            s.setSelection(0);
+        }
+
+        s.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+
+                if (pos == 0) {
+                    notificationFrequency = 1;
+                    System.out.println("Frequency = " + notificationFrequency);
+                }else if(pos == 1) {
+                    notificationFrequency = 2;
+                    System.out.println("Frequency = " + notificationFrequency);
+                }else{
+                    notificationFrequency = 3;
+                    System.out.println("Frequency = " + notificationFrequency);
+                }
+            }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
+        });
 
         //display number of tasks user currently has to complete COPY/PASTE THIS
         int taskCount = db.getCount();
@@ -65,8 +104,14 @@ public class AboutFragment extends Fragment {
             }
         });
 
-        Switch toggle = (Switch) rootView.findViewById(R.id.notiSwitch);
-        toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        Switch notificationSwitch = (Switch) rootView.findViewById(R.id.notiSwitch);
+
+        notifications = (sharedpreferences.getInt(NOTIFICATION_STATE, 1));
+
+        if(notifications == 0){
+            notificationSwitch.toggle();
+        }
+        notificationSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     notifications = 1;
@@ -92,6 +137,15 @@ public class AboutFragment extends Fragment {
         // set for 5 seconds later
         alarmMgr.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 15000, alarmIntent);
         Toast.makeText(root.getContext(), "Alarm set in 15 seconds", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onStop() {
+        final SharedPreferences.Editor editor = sharedpreferences.edit();
+        editor.putInt(NOTIFICATION_STATE, notifications);
+        editor.putInt(NOTIFREQ_VALUE, notificationFrequency);
+        editor.commit();
+        super.onStop();
     }
 
 }
