@@ -12,10 +12,10 @@
         android:textSize="20sp"
         android:focusable="false"
         android:hint="Touch here to select a date"
-        android:layout_marginTop="29dp"
-        android:layout_below="@+id/titleEditText"
-        android:layout_alignLeft="@+id/title"
-        android:layout_alignStart="@+id/title"
+        android:layout_marginBottom="41dp"
+        android:layout_above="@+id/textView2"
+        android:layout_alignLeft="@+id/textView"
+        android:layout_alignStart="@+id/textView"
         android:layout_alignRight="@+id/titleEditText"
         android:layout_alignEnd="@+id/titleEditText" />
 
@@ -40,18 +40,19 @@
         android:id="@+id/titleEditText"
         android:layout_alignTop="@+id/title"
         android:layout_toRightOf="@+id/title"
-        android:layout_toEndOf="@+id/title" />
+        android:layout_toEndOf="@+id/title"
+        android:imeOptions="actionDone"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Description"
         android:id="@+id/textView"
-        android:layout_marginTop="42dp"
         android:textSize="25dp"
-        android:layout_below="@+id/txtdate"
-        android:layout_alignLeft="@+id/txtdate"
-        android:layout_alignStart="@+id/txtdate" />
+        android:layout_below="@+id/titleEditText"
+        android:layout_alignLeft="@+id/title"
+        android:layout_alignStart="@+id/title"
+        android:layout_marginTop="21dp" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -60,14 +61,15 @@
         android:ems="10"
         android:background="#eaeaea"
         android:editable="true"
+        android:imeOptions="actionDone"
         android:gravity="top"
         android:id="@+id/descriptionEditText"
+        android:layout_below="@+id/textView"
         android:layout_alignLeft="@+id/textView"
         android:layout_alignStart="@+id/textView"
-        android:layout_below="@+id/textView"
-        android:layout_alignRight="@+id/titleEditText"
-        android:layout_alignEnd="@+id/titleEditText"
-        android:layout_above="@+id/taskDifficultySpinner" />
+        android:layout_above="@+id/txtdate"
+        android:layout_alignRight="@+id/txtdate"
+        android:layout_alignEnd="@+id/txtdate" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -75,10 +77,10 @@
         android:text="Priority"
         android:id="@+id/textView2"
         android:textSize="25dp"
-        android:layout_below="@+id/textView"
-        android:layout_alignLeft="@+id/descriptionEditText"
-        android:layout_alignStart="@+id/descriptionEditText"
-        android:layout_marginTop="74dp" />
+        android:layout_marginBottom="133dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@+id/txtdate"
+        android:layout_alignStart="@+id/txtdate" />
 
     <Spinner
         android:layout_width="wrap_content"
@@ -87,19 +89,17 @@
         android:spinnerMode="dropdown"
         android:layout_alignTop="@+id/textView2"
         android:layout_toRightOf="@+id/textView"
-        android:layout_toEndOf="@+id/textView"
-        android:layout_marginLeft="30dp"
-        android:layout_marginStart="30dp" />
+        android:layout_toEndOf="@+id/textView" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Confirm"
         android:id="@+id/confirm"
+        android:layout_marginTop="23dp"
         android:layout_below="@+id/taskDifficultySpinner"
-        android:layout_alignRight="@+id/descriptionEditText"
-        android:layout_alignEnd="@+id/descriptionEditText"
-        android:layout_marginTop="45dp" />
+        android:layout_alignRight="@+id/titleEditText"
+        android:layout_alignEnd="@+id/titleEditText" />
 
 
 </RelativeLayout>

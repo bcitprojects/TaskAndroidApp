@@ -1,16 +1,11 @@
 package ca.bcit.comp3717.test2;
 
 import android.app.DatePickerDialog;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -18,9 +13,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Locale;
 
 /**
  * Created by Kevin on 2/6/2016.
@@ -38,11 +31,17 @@ public class CreateFragment extends Fragment {
     Integer mYear, mMonth, mDay;
 
     @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.calendar_fragment, container, false);
+        View rootView = inflater.inflate(R.layout.create_fragment, container, false);
 
         txtDate     = (EditText) rootView.findViewById(R.id.txtdate);
 
@@ -55,13 +54,12 @@ public class CreateFragment extends Fragment {
         });
 
         array_spinner=new String[3];
-        array_spinner[0]="Low";
+        array_spinner[0] ="Low";
         array_spinner[1]="Medium";
         array_spinner[2]="High";
         Spinner s = (Spinner) rootView.findViewById(R.id.taskDifficultySpinner);
         ArrayAdapter adapter = new ArrayAdapter(getContext(), android.R.layout.simple_spinner_item, array_spinner);
         s.setAdapter(adapter);
-
         return rootView;
     }
 
