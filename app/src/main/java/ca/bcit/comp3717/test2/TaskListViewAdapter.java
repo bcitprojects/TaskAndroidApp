@@ -59,7 +59,7 @@ public class TaskListViewAdapter extends ArrayAdapter<TaskListViewItem>{
 
                 DataDbHelper db = new DataDbHelper(v.getContext());
                 db.delete(list.get(position).id);
-                Toast.makeText(v.getContext(),"Deleting " + position, Toast.LENGTH_LONG).show();
+               // Toast.makeText(v.getContext(),"Deleting " + position, Toast.LENGTH_LONG).show();
                 list.remove(position); //or some other task
                 notifyDataSetChanged();
             }

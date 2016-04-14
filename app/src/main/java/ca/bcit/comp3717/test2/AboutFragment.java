@@ -11,9 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 /**
  * Created by Kevin on 2/6/2016.
@@ -22,6 +25,7 @@ public class AboutFragment extends Fragment {
 
     private String array_spinner[];
     private View root;
+    public static int notifications;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -58,6 +62,17 @@ public class AboutFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 ((MainActivity)getActivity()).deleteAllTasks();
+            }
+        });
+
+        Switch toggle = (Switch) rootView.findViewById(R.id.notiSwitch);
+        toggle.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    notifications = 1;
+                } else {
+                    notifications = 0;
+                }
             }
         });
 

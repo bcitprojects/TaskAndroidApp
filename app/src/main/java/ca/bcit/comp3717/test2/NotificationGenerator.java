@@ -48,7 +48,7 @@ public class NotificationGenerator {
         int inSeconds = seconds * 1000;
         int notificationID = 1;
 
-        if(tasks != null) {
+        if((tasks != null) && (AboutFragment.notifications == 1)) {
             for(Task a: tasks) {
                 if(isValidTask(a)){
                     AlarmManager alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);

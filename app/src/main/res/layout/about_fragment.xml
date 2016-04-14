@@ -9,7 +9,7 @@
     <Switch
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/switch1"
+        android:id="@+id/notiSwitch"
         android:checked="true"
         android:text="Notifications                "
         android:textSize="30dp"
@@ -25,9 +25,9 @@
         android:id="@+id/notiFreqText"
         android:layout_marginTop="41dp"
         android:textSize="25dp"
-        android:layout_below="@+id/switch1"
-        android:layout_alignLeft="@+id/switch1"
-        android:layout_alignStart="@+id/switch1" />
+        android:layout_below="@+id/notiSwitch"
+        android:layout_alignLeft="@+id/notiSwitch"
+        android:layout_alignStart="@+id/notiSwitch" />
 
     <Spinner
         android:layout_width="wrap_content"
@@ -55,8 +55,8 @@
         android:text="Notify Me"
         android:id="@+id/notifyButton"
         android:layout_alignTop="@+id/deleteAllButton"
-        android:layout_alignRight="@+id/switch1"
-        android:layout_alignEnd="@+id/switch1" />
+        android:layout_alignRight="@+id/notiSwitch"
+        android:layout_alignEnd="@+id/notiSwitch" />
 
     <TextView
         android:layout_width="wrap_content"
