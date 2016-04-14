@@ -88,7 +88,7 @@ public class TaskFragment extends ListFragment {
             dateDiff = Long.toString(days);
 
             String dayString = (dateDiff.equalsIgnoreCase("1"))? " day left":" days left";
-            TaskListViewItem tlvi = new TaskListViewItem(drawable, dateDiff + dayString + '\n' + t.getTitle(), t.getDescription());
+            TaskListViewItem tlvi = new TaskListViewItem(t.getId(), drawable, dateDiff + dayString + '\n' + t.getTitle(), t.getDescription());
             tlvi.setDue(dateSet);
             taskList.add(tlvi);
         }
@@ -116,20 +116,4 @@ public class TaskFragment extends ListFragment {
         super.onActivityCreated(savedInstanceState);
     }
 
-
-   private ArrayList<TaskListViewItem> getTaskList(){
-
-        ArrayList<TaskListViewItem> test = new ArrayList<TaskListViewItem>();
-        Resources resources = getResources();
-       // test.add(new TaskListViewItem(resources.getDrawable(R.drawable.test), getString(R.string.test), getString(R.string.test_description)));
-        test.add(new TaskListViewItem(resources.getDrawable(R.drawable.test), "test Title", "test description"));
-
-        return test;
-    }
-
-    protected void addListItem(Drawable drawable, String title, String description) {
-
-        Resources resources = getResources();
-        taskList.add(new TaskListViewItem(drawable, title, description));
-    }
 }
