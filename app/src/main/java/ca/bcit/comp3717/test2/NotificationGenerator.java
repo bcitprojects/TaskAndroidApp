@@ -4,6 +4,8 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -27,6 +29,8 @@ public class NotificationGenerator {
     public static final int DAYS_IN_MILLISECONDS = 24*60*60*1000;
     public static final String TASK_DATE_FORMAT = "dd/MM/yyyy";
     public static final String TODAY_DATE_FORMAT = "dd/MM/yyyy";
+    public static final String NOTIFICATION_STATE = "notificationKey";
+    public static final String NOTIFREQ_VALUE = "notiFreqKey";
 
     public static void generateTimedNotification(Context context, String title, String message, int seconds) {
 
@@ -45,12 +49,16 @@ public class NotificationGenerator {
 
     public static void generateWithList(Context context, ArrayList<Task> tasks, int seconds) {
 
+        SharedPreferences sharedpreferences = PreferenceManager.getDefaultSharedPreferences(context);
+
         int inSeconds = seconds * 1000;
         int notificationID = 1;
+        int notifications = sharedpreferences.getInt(NOTIFICATION_STATE, 0);
 
-        if((tasks != null) && (AboutFragment.notifications == 1)) {
+
+        if((tasks != null) && (notifications == 1)) {
             for(Task a: tasks) {
-                if(isValidTask(a)){
+                if(isValidTask(a, context)){
                     AlarmManager alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
                     Intent intent = new Intent(context, AlarmReceiver.class);
                     intent.putExtra("message", a.getDescription());
@@ -73,20 +81,23 @@ public class NotificationGenerator {
     }
 
     //checks if tasks will send a notification
-    public static boolean isValidTask(Task task) {
+    public static boolean isValidTask(Task task, Context context) {
+
+        SharedPreferences sharedpreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        int noti_freq = sharedpreferences.getInt(NOTIFREQ_VALUE, 1);
 
         int difference = getNumberOfDayDifference(task);
 
         if(task.getPriority().equals("2")) {
-            if(difference > ZERO_DAY && difference <= HIGH_PRIORITY) {
+            if(difference > ZERO_DAY && difference <= (HIGH_PRIORITY * noti_freq)) {
                 return true;
             }
         }else if(task.getPriority().equals("1")) {
-            if(difference > ZERO_DAY && difference <= MED_PRIORITY) {
+            if(difference > ZERO_DAY && difference <= (MED_PRIORITY * noti_freq)) {
                 return true;
             }
         }else if(task.getPriority().equals("0")) {
-            if(difference == LOW_PRIORITY) {
+            if(difference <= (LOW_PRIORITY * noti_freq)) {
                 return true;
             }
         }
