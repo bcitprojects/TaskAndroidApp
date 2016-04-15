@@ -91,7 +91,7 @@ public class AboutFragment extends Fragment {
         notifyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NotificationGenerator.generateWithList(rootView.getContext(), ((MainActivity) getActivity()).getTaskList(), 5);
+                NotificationGenerator.generateWithList(rootView.getContext(), ((MainActivity) getActivity()).getTaskList(), 1);
             }
         });
 
@@ -112,8 +112,10 @@ public class AboutFragment extends Fragment {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     editor.putInt(NOTIFICATION_STATE, 1);
+                    editor.commit();
                 } else{
                     editor.putInt(NOTIFICATION_STATE, 0);
+                    editor.commit();
                 }
             }
         });
