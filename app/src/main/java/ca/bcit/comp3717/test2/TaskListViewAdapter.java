@@ -38,13 +38,26 @@ public class TaskListViewAdapter extends ArrayAdapter<TaskListViewItem>{
             viewHolder.ivIcon = (ImageView) convertView.findViewById(R.id.ivIcon);
             viewHolder.tvTitle = (TextView) convertView.findViewById(R.id.tvTitle);
             viewHolder.tvDescription = (TextView) convertView.findViewById(R.id.tvDescription);
+            viewHolder.deleteBtn = (Button)convertView.findViewById(R.id.delete_btn);
             convertView.setTag(viewHolder);
+            viewHolder.deleteBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    //do something
+
+                    DataDbHelper db = new DataDbHelper(v.getContext());
+                    db.delete(list.get(position).id);
+                    // Toast.makeText(v.getContext(),"Deleting " + position, Toast.LENGTH_LONG).show();
+                    list.remove(position); //or some other task
+                    notifyDataSetChanged();
+                }
+            });
         } else {
             // recycle the already inflated view
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        Button deleteBtn = (Button)convertView.findViewById(R.id.delete_btn);
+
 
         // update the item view
         TaskListViewItem item = getItem(position);
@@ -52,18 +65,7 @@ public class TaskListViewAdapter extends ArrayAdapter<TaskListViewItem>{
         viewHolder.tvTitle.setText(item.title);
         viewHolder.tvDescription.setText(item.description);
 
-        deleteBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //do something
 
-                DataDbHelper db = new DataDbHelper(v.getContext());
-                db.delete(list.get(position).id);
-               // Toast.makeText(v.getContext(),"Deleting " + position, Toast.LENGTH_LONG).show();
-                list.remove(position); //or some other task
-                notifyDataSetChanged();
-            }
-        });
 
         return convertView;
     }
@@ -77,6 +79,7 @@ public class TaskListViewAdapter extends ArrayAdapter<TaskListViewItem>{
         ImageView ivIcon;
         TextView tvTitle;
         TextView tvDescription;
+        Button   deleteBtn;
     }
 
 

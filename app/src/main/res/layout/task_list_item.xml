@@ -22,14 +22,7 @@
                     android:scaleType="fitXY"
                     android:layout_alignParentLeft="true" />
 
-                <Button
-                    android:id="@+id/delete_btn"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginRight="5dp"
-                    android:text="X" />
+
 
                 <!-- the container view for the title and description -->
                 <RelativeLayout android:layout_width="wrap_content"
@@ -49,6 +42,16 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:textAppearance="@android:style/TextAppearance.Small" />
+
+                        <Button
+                            android:id="@+id/delete_btn"
+                            android:focusable="false"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginRight="5dp"
+                            android:text="X" />
                 </RelativeLayout>
 
         </RelativeLayout>

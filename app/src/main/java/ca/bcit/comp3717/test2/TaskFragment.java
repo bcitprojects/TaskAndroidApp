@@ -102,6 +102,8 @@ public class TaskFragment extends ListFragment {
         return rootView;
     }
 
+
+
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         TaskListViewItem task = (TaskListViewItem)getListView().getItemAtPosition(position);
