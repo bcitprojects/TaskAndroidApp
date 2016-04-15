@@ -158,10 +158,4 @@ public class AboutFragment extends Fragment {
         Toast.makeText(root.getContext(), "Alarm set in 15 seconds", Toast.LENGTH_LONG).show();
     }
 
-    @Override
-    public void onStop() {
-        editor.commit();
-        super.onStop();
-    }
-
 }

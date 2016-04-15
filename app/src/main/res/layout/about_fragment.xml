@@ -12,10 +12,11 @@
         android:id="@+id/notiSwitch"
         android:checked="true"
         android:text="Notifications                "
-        android:textSize="30dp"
-        android:layout_marginTop="61dp"
+        android:textSize="20dp"
+        android:layout_marginTop="59dp"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignLeft="@+id/deleteAllButton"
+        android:layout_alignStart="@+id/deleteAllButton" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -24,30 +25,32 @@
         android:text="Notification Frequency"
         android:id="@+id/notiFreqText"
         android:layout_marginTop="41dp"
-        android:textSize="25dp"
+        android:textSize="20dp"
         android:layout_below="@+id/notiSwitch"
         android:layout_alignLeft="@+id/notiSwitch"
         android:layout_alignStart="@+id/notiSwitch" />
 
     <Spinner
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:id="@+id/notiFreqSpinner"
-        android:layout_alignTop="@+id/notiFreqText"
+        android:spinnerMode="dropdown"
+        android:layout_alignBaseline="@+id/notiFreqText"
         android:layout_alignBottom="@+id/notiFreqText"
-        android:layout_toEndOf="@+id/notiFreqText"
-        android:layout_toRightOf="@+id/notiFreqText"
-        android:spinnerMode="dropdown" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Delete All Tasks"
         android:id="@+id/deleteAllButton"
+        android:layout_marginBottom="50dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignLeft="@+id/notiFreqText"
-        android:layout_alignStart="@+id/notiFreqText"
-        android:layout_marginBottom="52dp" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginLeft="44dp"
+        android:layout_marginStart="44dp" />
 
     <Button
         android:layout_width="wrap_content"
@@ -55,18 +58,21 @@
         android:text="Notify Me"
         android:id="@+id/notifyButton"
         android:layout_alignTop="@+id/deleteAllButton"
-        android:layout_alignRight="@+id/notiSwitch"
-        android:layout_alignEnd="@+id/notiSwitch" />
+        android:layout_toRightOf="@+id/deleteAllButton"
+        android:layout_toEndOf="@+id/deleteAllButton"
+        android:layout_marginLeft="29dp"
+        android:layout_marginStart="29dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Task to be Completed: "
         android:id="@+id/taskCount"
-        android:textSize="25dp"
+        android:textSize="20dp"
         android:textColor="#050000"
-        android:layout_centerVertical="true"
+        android:layout_below="@+id/notiFreqText"
         android:layout_alignLeft="@+id/notiFreqText"
-        android:layout_alignStart="@+id/notiFreqText" />
+        android:layout_alignStart="@+id/notiFreqText"
+        android:layout_marginTop="48dp" />
 
 </RelativeLayout>
