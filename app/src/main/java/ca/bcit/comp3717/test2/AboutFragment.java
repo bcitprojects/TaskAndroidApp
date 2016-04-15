@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,13 +29,11 @@ public class AboutFragment extends Fragment {
 
     private String array_spinner[];
     private View root;
-    public static final String MyPREFERENCES = "MyPrefs" ;
     public static final String NOTIFICATION_STATE = "notificationKey";
     public static final String NOTIFREQ_VALUE = "notiFreqKey";
 
-    public static int notifications;
-    public static int notificationFrequency;
     SharedPreferences sharedpreferences;
+    SharedPreferences.Editor editor;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,7 +41,9 @@ public class AboutFragment extends Fragment {
 
         final View rootView = inflater.inflate(R.layout.about_fragment, container, false);
         root                = rootView;
-        sharedpreferences = rootView.getContext().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+       // sharedpreferences = rootView.getContext().getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
+        sharedpreferences = PreferenceManager.getDefaultSharedPreferences(rootView.getContext());
+        editor = sharedpreferences.edit();
 
         //needed to get number of tasks COPY/PASTE THIS
         DataDbHelper db     = new DataDbHelper(getActivity());
@@ -55,11 +56,9 @@ public class AboutFragment extends Fragment {
         ArrayAdapter adapter = new ArrayAdapter(rootView.getContext(), android.R.layout.simple_spinner_item, array_spinner);
         s.setAdapter(adapter);
 
-        notificationFrequency = (sharedpreferences.getInt(NOTIFREQ_VALUE, 1));
-
-        if(notificationFrequency == 3) {
+        if(sharedpreferences.getInt(NOTIFREQ_VALUE, 1) == 3) {
             s.setSelection(2);
-        }else if(notificationFrequency == 2) {
+        }else if(sharedpreferences.getInt(NOTIFREQ_VALUE, 1) == 2) {
             s.setSelection(1);
         }else{
             s.setSelection(0);
@@ -69,14 +68,14 @@ public class AboutFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
 
                 if (pos == 0) {
-                    notificationFrequency = 1;
-                    System.out.println("Frequency = " + notificationFrequency);
+                    editor.putInt(NOTIFREQ_VALUE, pos + 1);
+                    editor.commit();
                 }else if(pos == 1) {
-                    notificationFrequency = 2;
-                    System.out.println("Frequency = " + notificationFrequency);
+                    editor.putInt(NOTIFREQ_VALUE, pos + 1);
+                    editor.commit();
                 }else{
-                    notificationFrequency = 3;
-                    System.out.println("Frequency = " + notificationFrequency);
+                    editor.putInt(NOTIFREQ_VALUE, pos + 1);
+                    editor.commit();
                 }
             }
             public void onNothingSelected(AdapterView<?> parent) {
@@ -106,17 +105,15 @@ public class AboutFragment extends Fragment {
 
         Switch notificationSwitch = (Switch) rootView.findViewById(R.id.notiSwitch);
 
-        notifications = (sharedpreferences.getInt(NOTIFICATION_STATE, 1));
-
-        if(notifications == 0){
+        if(sharedpreferences.getInt(NOTIFICATION_STATE, 1) == 0){
             notificationSwitch.toggle();
         }
         notificationSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    notifications = 1;
-                } else {
-                    notifications = 0;
+                    editor.putInt(NOTIFICATION_STATE, 1);
+                } else{
+                    editor.putInt(NOTIFICATION_STATE, 0);
                 }
             }
         });
@@ -141,9 +138,6 @@ public class AboutFragment extends Fragment {
 
     @Override
     public void onStop() {
-        final SharedPreferences.Editor editor = sharedpreferences.edit();
-        editor.putInt(NOTIFICATION_STATE, notifications);
-        editor.putInt(NOTIFREQ_VALUE, notificationFrequency);
         editor.commit();
         super.onStop();
     }
